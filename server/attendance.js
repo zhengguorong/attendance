@@ -81,6 +81,8 @@ var startTask = function (userId,time) {
         for(var i=0;i<time.length;i++){
             dayOfWeek.push(parseInt(time[i]));
         }
+    }else{
+        return
     }
     var startRule = new schedule.RecurrenceRule();
     startRule.dayOfWeek = dayOfWeek;
@@ -103,6 +105,8 @@ var finishTask = function (userId,time) {
         for(var i=0;i<time.length;i++){
             dayOfWeek.push(parseInt(time[i]));
         }
+    }else{
+        return
     }
     var finishRule = new schedule.RecurrenceRule();
     finishRule.dayOfWeek = dayOfWeek;
