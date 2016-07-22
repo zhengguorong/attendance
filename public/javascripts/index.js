@@ -40,7 +40,12 @@ function IndexModel(){
     
     self.addTask=function (user) {
         $.get('/api/addTask',{userId:user.account(),time:self.arrayToString(user.times())},function(data){
-            self.getUsers();
+            if(data.isSuccess){
+                self.getUsers();
+            }else{
+                alert(data.msg)
+            }
+
         },'json')
     }
     self.deleteTask=function (user) {
