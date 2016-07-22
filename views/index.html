@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>自动打卡系统</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="stylesheets/bootstrap-theme.min.css">
+</head>
+<body>
+<div class="container">
+    <h2 class="sub-header">用户列表<span style="float:right;"><button type="button" data-toggle="modal" data-target="#addModal" class="btn btn-primary">新增</button></span></h2>
+    <table class="table table-hover">
+        <thead>
+
+        <tr>
+            <th>员工编号</th>
+            <th>名字</th>
+            <th>打卡时间</th>
+            <th>状态</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody data-bind="foreach:users">
+        <tr >
+            <td data-bind="text:account"></td>
+            <td data-bind="text:username"></td>
+            <td>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value="1" data-bind="checked: times"> 星期一
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value="2" data-bind="checked: times"> 星期二
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value="3" data-bind="checked: times"> 星期三
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value="4" data-bind="checked: times"> 星期四
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value="5" data-bind="checked: times"> 星期五
+                    </label>
+                </div>
+
+            </td>
+            <td>
+                <!-- ko if:tasking -->
+                    进行中
+                <!-- /ko -->
+                <!-- ko ifnot:tasking -->
+                    已停止
+                <!-- /ko -->
+            </td>
+            <td style="width: 30%;">
+                <button type="button" class="btn btn-success btn-sm" data-bind="click:$root.addTask,visible:!tasking()">开始任务</button>
+                <button type="button" class="btn btn-warning btn-sm" data-bind="click:$root.deleteTask,visible:tasking">停止任务</button>
+                <button type="button" class="btn btn-danger btn-sm" data-bind="click:$root.deleteUser">删除用户</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="modal fade" id="addModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">新增</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="name" class="control-label">用户名:</label>
+                            <input type="text" class="form-control" id="name" data-bind="value:addUserModel.username">
+                        </div>
+                        <div class="form-group">
+                            <label for="account" class="control-label">员工号:</label>
+                            <input type="text" class="form-control" id="account" data-bind="value:addUserModel.account">
+                        </div>
+                        <div class="form-group">
+                            <label for="pwd" class="control-label">密码:</label>
+                            <input type="password" class="form-control" id="pwd" data-bind="value:addUserModel.password">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" data-bind="click:$root.addUser">保存</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>
+</body>
+<script src="javascripts/jquery.min.js"></script>
+<script src="javascripts/bootstrap.min.js"></script>
+<script src="javascripts/knockout.js"></script>
+<script src="javascripts/index.js"></script>
+</html>
