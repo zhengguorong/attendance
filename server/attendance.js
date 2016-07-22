@@ -84,9 +84,9 @@ var startTask = function (userId,time) {
     }
     var startRule = new schedule.RecurrenceRule();
     startRule.dayOfWeek = dayOfWeek;
-    startRule.hour = 16;
-    // startRule.minute = Math.round(Math.random(10)*25);//随机生成1-25的数字
-    startRule.minute = 17;//随机生成1-25的数字
+    startRule.hour = 8;
+    startRule.minute = Math.round(Math.random(10)*25);//随机生成1-25的数字
+    // startRule.minute = 17;//随机生成1-25的数字
     schedule.scheduleJob(userId,startRule, function () {
         console.log('执行startTask')
         goToWork(userId)
@@ -106,9 +106,9 @@ var finishTask = function (userId,time) {
     }
     var finishRule = new schedule.RecurrenceRule();
     finishRule.dayOfWeek = dayOfWeek;
-    finishRule.hour = 16;
-    // finishRule.minute = Math.round(Math.random(10)*25+40);
-    finishRule.minute = 18;
+    finishRule.hour = 17;
+    finishRule.minute = Math.round(Math.random(10)*25+40);
+    // finishRule.minute = 18;
     schedule.scheduleJob(userId,finishRule, function () {
         console.log('执行finishTask')
         outToWork(userId)
