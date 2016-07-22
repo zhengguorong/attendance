@@ -46,6 +46,10 @@ router.get('/addTask', function (req, res, next) {
     var userId = req.query.userId
     //设置上班打卡定时任务
     var time = req.query.time;
+    if(!time){
+        res.json(200,{isSuccess:false,msg:'请选择打卡时间'});
+        return;
+    }
     try {
         //设置上班打卡定时任务
         attendanceApi.startTask(userId, time)
