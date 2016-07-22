@@ -22,6 +22,13 @@ var refreshToken=function(userId,success){
             var user=snapshot.val()[userId]
             //获取用户TOKEN
             login({"password":user.password,"account":user.account,deviceNum:""},function (res,data) {
+                console.log(data)
+                if(data.responseCode==2204){
+                    userDB.child(userId).update({
+                        "state": '密码错误'
+                    });
+                    return;
+                }
                 server.token=data.token;
                 userDB.child(userId).update({
                     "token": data.token

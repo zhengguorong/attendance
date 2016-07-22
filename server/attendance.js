@@ -66,9 +66,9 @@ var confirmAttendance = function ( token, callback) {
             cityName: '广州',
             countyName: '黄埔区',
             address: '云埔一路14号',
-            longitude: 20.00,
-            latitude: 10.00,
-            altitude: 20.00
+            longitude: 00.00,
+            latitude: 00.00,
+            altitude: 00.00
         },
         workTask: 'normal_work'
     }, callback)
@@ -84,9 +84,9 @@ var startTask = function (userId,time) {
     }
     var startRule = new schedule.RecurrenceRule();
     startRule.dayOfWeek = dayOfWeek;
-    startRule.hour = 11;
+    startRule.hour = 16;
     // startRule.minute = Math.round(Math.random(10)*25);//随机生成1-25的数字
-    startRule.minute = 43;//随机生成1-25的数字
+    startRule.minute = 17;//随机生成1-25的数字
     schedule.scheduleJob(userId,startRule, function () {
         console.log('执行startTask')
         goToWork(userId)
@@ -106,52 +106,75 @@ var finishTask = function (userId,time) {
     }
     var finishRule = new schedule.RecurrenceRule();
     finishRule.dayOfWeek = dayOfWeek;
-    finishRule.hour = 11;
+    finishRule.hour = 16;
     // finishRule.minute = Math.round(Math.random(10)*25+40);
-    finishRule.minute = 44;
+    finishRule.minute = 18;
     schedule.scheduleJob(userId,finishRule, function () {
         console.log('执行finishTask')
         outToWork(userId)
     });
 
 }
-
+var goToWorkServer=function(userId,token){
+    confirmAttendance(token, function (res, data) {
+        console.log("打上班卡成功");console.log(data)
+        //token失效,重新获取再打卡
+        if (data.responseCode == 2301) {
+            userApi.refreshToken(userId, function (token) {
+                console.log("刷新TOKEN"+token)
+                confirmAttendance(token, function (res, data) {console.log("重新获取TOKEN,打上班卡成功");console.log(data)});
+            })
+        }
+    })
+}
 //上班打卡
 var goToWork = function (userId) {
     userApi.getUserById(userId, function (user) {
-        confirmAttendance(user.token, function (res, data) {
-            console.log("打上班卡成功");console.log(data)
-            //token失效,重新获取再打卡
-            if (data.responseCode == 2301) {
-                userApi.refreshToken(userId, function (token) {
-                    confirmAttendance(token, function (res, data) {console.log("打上班卡成功");console.log(data)});
-                })
-            }
-        })
+        if(user.token){
+            goToWorkServer(userId,user.token)
+        }else{
+            userApi.refreshToken(userId,function (token) {
+                goToWorkServer(userId,token)
+            })
+        }
+
     })
 }
 
-//下班打卡
-var outToWork=function (userId) {
-    userApi.getUserById(userId, function (user) {
-        //查看用户打卡Id
-        getPunchCard({token: user.token}, function (res, data) {
-            var confirm=function(token){
+var outToWorkServer=function(userId,token){
+    getPunchCard({token: token}, function (res, data) {
+        if(data.responseCode==2301){
+            userApi.refreshToken(userId,function(token){
                 //设置日志
                 confirmWorkDiary(token,"无",function(res,data){
                     //打卡
                     confirmAttendance(token ,function (res, data) {console.log("打下班卡成功");console.log(data)
                     });
                 })
-            }
-            if(data.responseCode==2301){
-                userApi.refreshToken(userId,function(token){
-                    confirm(token);
-                })
-            }else{
-                confirm(user.token);
-            }
-        })
+            })
+        }else{
+            //设置日志
+            confirmWorkDiary(token,"无",function(res,data){
+                //打卡
+                confirmAttendance(token ,function (res, data) {console.log("打下班卡成功");console.log(data)
+                });
+            })
+        }
+    })
+
+}
+//下班打卡
+var outToWork=function (userId) {
+    userApi.getUserById(userId, function (user) {
+        //查看用户打卡Id
+        if(user.token){
+            outToWorkServer(userId,user.token)
+        }else{
+            userApi.refreshToken(userId,function (token) {
+                outToWorkServer(userId,token)
+            })
+        }
+
     })
 }
 
