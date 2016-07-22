@@ -3,8 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./app.js",
-    "supervisor": "supervisor ./bin/www"
+    "start": "node ./app.js"
   },
   "dependencies": {
     "art-template": "^3.0.3",
