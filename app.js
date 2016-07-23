@@ -11,7 +11,7 @@ var userApi = require('./server/user')
 var attendanceApi = require('./server/attendance')
 
 var app = express();
-
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";//解决邮件发送问题
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'hbs');
