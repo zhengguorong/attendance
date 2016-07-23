@@ -25,6 +25,7 @@ var sendEmail=function(title,context,targer){
     };
     transporter.sendMail(mailOptions, function(error, info){
         if(error){
+            console.log('send fail'+error)
             throw 'send fail'
         }
         console.log('Message sent: ' + info.response);
