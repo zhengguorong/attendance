@@ -17,6 +17,7 @@
             <th>员工编号</th>
             <th>名字</th>
             <th>打卡时间</th>
+            <th>邮箱</th>
             <th>状态</th>
             <th>操作</th>
         </tr>
@@ -53,6 +54,7 @@
                 </div>
 
             </td>
+            <td data-bind="text:email"></td>
             <td>
                 <!-- ko if:tasking -->
                     进行中
@@ -85,6 +87,10 @@
                         <div class="form-group">
                             <label for="account" class="control-label">员工号:</label>
                             <input type="text" class="form-control" id="account" data-bind="value:addUserModel.account">
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="control-label">邮箱(用于发送成功通知):</label>
+                            <input type="text" class="form-control" id="email" data-bind="value:addUserModel.email">
                         </div>
                         <div class="form-group">
                             <label for="pwd" class="control-label">密码:</label>

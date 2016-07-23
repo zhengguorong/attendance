@@ -7,10 +7,13 @@
 var app = require('../app');
 var debug = require('debug')('attendance:server');
 var http = require('http');
-
 /**
  * Get port from environment and store in Express.
  */
+
+
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";//解决邮件发送问题
+
 
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);

@@ -5,6 +5,8 @@ var request = require('request');
 var server = require('./index');
 var userApi = require('./user');
 var schedule = require('node-schedule');
+var email = require('../utils/mail');
+var moment = require('moment');
 
 //获取打卡信息
 var getPunchCard=function(params,success){
@@ -121,12 +123,17 @@ var finishTask = function (userId,time) {
 }
 var goToWorkServer=function(userId,token){
     confirmAttendance(token, function (res, data) {
+        email.sendInWorkEmail(userId)
         console.log("打上班卡成功");console.log(data)
         //token失效,重新获取再打卡
         if (data.responseCode == 2301) {
             userApi.refreshToken(userId, function (token) {
                 console.log("刷新TOKEN"+token)
-                confirmAttendance(token, function (res, data) {console.log("重新获取TOKEN,打上班卡成功");console.log(data)});
+                confirmAttendance(token, function (res, data) {
+                    console.log("重新获取TOKEN,打上班卡成功");console.log(data);
+                    email.sendInWorkEmail(userId)
+                }
+                );
             })
         }
     })
@@ -152,7 +159,7 @@ var outToWorkServer=function(userId,token){
                 //设置日志
                 confirmWorkDiary(token,"无",function(res,data){
                     //打卡
-                    confirmAttendance(token ,function (res, data) {console.log("打下班卡成功");console.log(data)
+                    confirmAttendance(token ,function (res, data) {email.sendOutWorkEmail(userId);console.log("打下班卡成功");console.log(data)
                     });
                 })
             })
@@ -160,7 +167,7 @@ var outToWorkServer=function(userId,token){
             //设置日志
             confirmWorkDiary(token,"无",function(res,data){
                 //打卡
-                confirmAttendance(token ,function (res, data) {console.log("打下班卡成功");console.log(data)
+                confirmAttendance(token ,function (res, data) {email.sendOutWorkEmail(userId);console.log("打下班卡成功");console.log(data)
                 });
             })
         }

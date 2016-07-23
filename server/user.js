@@ -39,7 +39,7 @@ var refreshToken=function(userId,success){
     });
 }
 var getUserById=function(userId,success){
-    userDB.orderByKey().equalTo(userId||'').once("value", function(snapshot) {
+    userDB.orderByKey().equalTo(userId+''||'').once("value", function(snapshot) {
         success(snapshot.val()[userId])
     });
 }
@@ -49,12 +49,13 @@ var getUsers=function(success){
         success(snapshot.val())
     });
 }
-var addUser=function(username,account,password){
+var addUser=function(username,account,password,email){
     var data={}
     data[account]={
         name: username,
         account: account,
         password: cryptUtil.des.encrypt(password, 0),
+        email:email,
         deviceNum: '0000'
     }
     userDB.update(data)

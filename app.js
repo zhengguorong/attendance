@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+
 //引用artTemplate模块
 var template = require('art-template');
 var routes = require('./routes/index');
@@ -39,6 +40,8 @@ userApi.getTaskingUsers(function(data){
       attendanceApi.finishTask(key,data[key].time)
   }
 })
+
+
 
 
 // catch 404 and forward to error handler

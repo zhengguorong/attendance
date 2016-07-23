@@ -7,7 +7,7 @@ var schedule = require('node-schedule');
 
 router.get('/addUser', function (req, res, next) {
     try {
-        userApi.addUser(req.query.username, req.query.account, req.query.password);
+        userApi.addUser(req.query.username, req.query.account, req.query.password,req.query.email);
         res.json(200,{isSuccess:true,msg:'保存成功'});
     }
     catch (e){

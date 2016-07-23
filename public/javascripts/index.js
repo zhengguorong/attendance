@@ -5,6 +5,7 @@ function UserModel(params){
     this.username = ko.observable(params&&params.name);
     this.account = ko.observable(params&&params.account);
     this.password = ko.observable(params&&params.password);
+    this.email = ko.observable(params&&params.email);
     this.tasking = ko.observable(params&&params.tasking||false);
     this.times = ko.observableArray(params&&params.time&&params.time.split(','));
 }
@@ -14,11 +15,12 @@ function IndexModel(){
     self.addUserModel=new UserModel();
     self.users=ko.observableArray();
     self.addUser=function(){
-        $.get('/api/addUser',{username:self.addUserModel.username(),account:self.addUserModel.account(),password:self.addUserModel.password()},function (data) {
+        $.get('/api/addUser',{username:self.addUserModel.username(),account:self.addUserModel.account(),password:self.addUserModel.password(),email:self.addUserModel.email()},function (data) {
             if(data.isSuccess){
                 self.addUserModel.username('')
                 self.addUserModel.account('')
                 self.addUserModel.password('')
+                self.addUserModel.email('')
                 $('#addModal').modal('hide')
                 self.getUsers()
             }else {

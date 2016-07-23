@@ -1,5 +1,5 @@
 {
-  "name": "untitled",
+  "name": "attendance",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -13,8 +13,10 @@
     "debug": "~2.2.0",
     "express": "~4.13.4",
     "hbs": "~4.0.0",
+    "moment": "^2.14.1",
     "morgan": "~1.7.0",
     "node-schedule": "^1.1.1",
+    "nodemailer": "^2.5.0",
     "request": "^2.73.0",
     "serve-favicon": "~2.3.0",
     "wilddog": "^0.7.2"
