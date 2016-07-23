@@ -4,7 +4,6 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
 //引用artTemplate模块
 var template = require('art-template');
 var routes = require('./routes/index');
@@ -42,8 +41,6 @@ userApi.getTaskingUsers(function(data){
 })
 
 
-
-
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
@@ -74,11 +71,11 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-// var server = app.listen(3000, function () {
-//   var host = server.address().address;
-//   var port = server.address().port;
-//   console.log(' app listening at http://%s:%s', host, port);
-// });
 
+var server = app.listen(18080, function () {
+  var host = server.address().address;
+  var port = server.address().port;
+  console.log(' app listening at http://%s:%s', host, port);
+});
 
 module.exports = app;
