@@ -68,8 +68,8 @@ var confirmAttendance = function ( token, callback) {
             cityName: '广州',
             countyName: '黄埔区',
             address: '云埔一路14号',
-            longitude: 10.00,
-            latitude: 10.00,
+            longitude: 113.542267,
+            latitude: 23.151166,
             altitude: 10.00
         },
         workTask: 'normal_work'
