@@ -8,21 +8,21 @@ var schedule = require('node-schedule');
 router.get('/addUser', function (req, res, next) {
     try {
         userApi.addUser(req.query.username, req.query.account, req.query.password,req.query.email);
-        res.json(200,{isSuccess:true,msg:'保存成功'});
+        res.status(200).json({isSuccess:true,msg:'保存成功'})
     }
     catch (e){
-        res.json(200,{isSuccess:false,msg:'保存失败'});
+        res.status(200).json({isSuccess:false,msg:'保存失败'});
     }
 
 })
 router.get('/users', function (req, res, next) {
     try {
         userApi.getUsers(function (data) {
-            res.json(200, {isSuccess: true, users: data});
+            res.status(200).json({isSuccess: true, users: data})
         })
     }
     catch (e){
-        res.json(200,{isSuccess:false,msg:'获取失败'});
+        res.status(200).json({isSuccess:false,msg:'获取失败'});
     }
 
 })
@@ -37,7 +37,7 @@ router.get('/deleteUser', function (req, res, next) {
     catch (e){
         console.log("找不到定时器")
     }
-    res.json(200,{isSuccess:true,msg:'删除成功'})
+    res.status(200).json({isSuccess:true,msg:'删除成功'})
 })
 
 
@@ -47,7 +47,7 @@ router.get('/addTask', function (req, res, next) {
     //设置上班打卡定时任务
     var time = req.query.time;
     if(!time){
-        res.json(200,{isSuccess:false,msg:'请选择打卡时间'});
+        res.status(200).json({isSuccess:false,msg:'请选择打卡时间'})
         return;
     }
     try {
@@ -56,10 +56,10 @@ router.get('/addTask', function (req, res, next) {
         //设置下班打卡定时任务
         attendanceApi.finishTask(userId, time)
         userApi.updateUser(userId,{tasking:true,time:req.query.time})
-        res.json(200,{isSuccess:true,msg:'保存成功'});
+        res.status(200).json({isSuccess:true,msg:'保存成功'})
     }
     catch (e){
-        res.json(200,{isSuccess:false,msg:'定时任务添加失败,'+e.message});
+        res.status(200).json({isSuccess:false,msg:'定时任务添加失败,'+e.message})
     }
 
 
@@ -72,10 +72,10 @@ router.get('/deleteTask',function(req,res,next){
         var job = schedule.scheduledJobs[userId];
         job.cancel();
         userApi.updateUser(userId,{tasking: false})
-        res.json(200,{isSuccess:true,msg:'停止成功'});
+        res.status(200).json({isSuccess:true,msg:'停止成功'})
     }
     catch (e){
-        res.json(200,{isSuccess:false,msg:'定时器不存在'});
+        res.status(200).json({isSuccess:false,msg:'定时器不存在'})
     }
 
 })

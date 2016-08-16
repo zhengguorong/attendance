@@ -22,11 +22,10 @@ router.get('/test',function (req, res, next) {
     var userId='80473541'
     try {
         email.sendInWorkEmail('80473541')
-        res.json(200,{isSuccess:true,msg:'发送成功'})
+        res.status(200).json({isSuccess:true,msg:'发送成功'})
     }
     catch (e){
-
-        res.json(200,{isSuccess:false,msg:'发送失败'+e.message})
+        res.status(200).json({isSuccess:false,msg:'发送失败'+e.message})
     }
 
 })
