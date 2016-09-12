@@ -68,8 +68,8 @@ var confirmAttendance = function ( token, callback) {
             cityName: '广州',
             countyName: '黄埔区',
             address: '云埔一路14号',
-            longitude: 113.542267,
-            latitude: 23.151166,
+            longitude: 113.542267+Number(Math.random(100).toFixed(2)),
+            latitude: 23.151166+Number(Math.random(100).toFixed(2)),
             altitude: 10.00
         },
         workTask: 'normal_work'
@@ -89,12 +89,11 @@ var startTask = function (userId,time) {
     var startRule = new schedule.RecurrenceRule();
     startRule.dayOfWeek = dayOfWeek;
     startRule.hour = 8;
-    startRule.minute = Math.round(Math.random(10)*25);//随机生成1-25的数字
+    startRule.minute = 10;//随机生成1-25的数字
     // startRule.minute = 17;//随机生成1-25的数字
     schedule.scheduleJob(userId,startRule, function () {
         console.log('执行startTask')
-        goToWork(userId)
-
+        setTimeout("goToWork(userId)",Math.round(Math.random(10)*10)*60*1000)
     });
     
 }
@@ -113,11 +112,12 @@ var finishTask = function (userId,time) {
     var finishRule = new schedule.RecurrenceRule();
     finishRule.dayOfWeek = dayOfWeek;
     finishRule.hour = 17;
-    finishRule.minute = Math.round(Math.random(10)*25+40);
+    finishRule.minute = 45;
     // finishRule.minute = 18;
     schedule.scheduleJob(userId,finishRule, function () {
         console.log('执行finishTask')
-        outToWork(userId)
+        // outToWork(userId)
+        setTimeout("outToWork(userId)",Math.round(Math.random(10)*10)*60*1000)
     });
 
 }
