@@ -93,7 +93,9 @@ var startTask = function (userId,time) {
     // startRule.minute = 17;//随机生成1-25的数字
     schedule.scheduleJob(userId,startRule, function () {
         console.log('执行startTask')
-        setTimeout("goToWork(userId)",Math.round(Math.random(10)*10)*60*1000)
+        setTimeout(function(userId){
+            goToWork(userId)
+        },Math.round(Math.random(10)*10)*60*1000)
     });
     
 }
@@ -117,7 +119,9 @@ var finishTask = function (userId,time) {
     schedule.scheduleJob(userId,finishRule, function () {
         console.log('执行finishTask')
         // outToWork(userId)
-        setTimeout("outToWork(userId)",Math.round(Math.random(10)*10)*60*1000)
+        setTimeout(function(userId){
+            outToWork(userId)
+        },Math.round(Math.random(10)*10)*60*1000)
     });
 
 }
